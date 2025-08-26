@@ -1,44 +1,57 @@
-  #include <stdio.h>
+#include <stdio.h>
 
-int main() {
-    /* Jogo de Xadrez */
-    int bispo = 1;
-    int cavalo = 1;
-    int torre  = 1;
-    int rainha = 1;
+/* Função recursiva para movimentar a Torre */
+void moverTorre(int casas) {
+    if (casas == 0) return;
+    printf("Direita\n");
+    moverTorre(casas - 1);
+}
 
-    // Lógica de movimentação da torre
+/* Função recursiva para movimentar a Rainha */
+void moverRainha(int casas) {
+    if (casas == 0) return;
+    printf("Esquerda\n");
+    moverRainha(casas - 1);
+}
+
+/* Função recursiva para movimentar o Bispo */
+void moverBispoRecursivo(int vertical, int horizontal) {
+    if (vertical == 0 || horizontal == 0) return;
+    printf("Cima\n");
+    for (int i = 0; i < horizontal; i++) {
+        printf("Direita\n");
+    }
+    moverBispoRecursivo(vertical - 1, horizontal);
+}
+
+int main(void) {
+    // Movimentação da Torre
     printf("Movimento da torre:\n");
-    while (torre <= 5) {
-        printf("Direita\n");
-        torre++;
-    }
+    moverTorre(5);
     printf("\n");
 
-    // Lógica de movimentação da rainha
+    // Movimentação da Rainha
     printf("Movimento da rainha:\n");
-    do {
-        printf("Esquerda\n");
-        rainha++;
-    } while (rainha <= 8);
+    moverRainha(8);
     printf("\n");
 
-    // Lógica de movimentação do bispo
-    printf("Movimento do bispo\n");
-    for (bispo = 1; bispo <= 5; bispo++) {
+    // Movimentação do Bispo com recursividade + loop aninhado
+    printf("Movimento do bispo:\n");
+    moverBispoRecursivo(5, 1); // 5 movimentos verticais, cada um com 1 movimento horizontal
+    printf("\n");
+
+    // Movimentação do Cavalo com loops complexos
+    printf("Movimento do cavalo:\n");
+    for (int cima = 2; cima > 0; cima--) {
         printf("Cima\n");
-        printf("Direita\n");
-    }
-    printf("\n");
-
-    // Lógica de movimentação do cavalo
-    printf("Movimento do cavalo\n");
-    while (cavalo != 0) {
-        cavalo--;
-        for (int i = 0; i < 2; i++) {
-            printf("Baixo\n");
+        for (int direita = 1; direita > 0; direita--) {
+            if (cima == 1 && direita == 1) {
+                printf("Direita\n");
+                break; // finaliza após o movimento em "L"
+            } else {
+                continue; // ignora qualquer outra combinação
+            }
         }
-        printf("Esquerda\n");
     }
 
     return 0;
@@ -73,7 +86,7 @@ Não é necessário validar a entrada do usuário.
 Não é necessário implementar a lógica completa do jogo de xadrez, apenas a simulação do movimento de cada peça individualmente.
 Utilize apenas as estruturas de repetição for, while e do-while, uma para cada peça do jogo.
 
-Desafio: Nível aventureiro
+Desafio: Nível intermediário
 
 1 - Movimentando o Cavalo
 Neste desafio, você dará continuidade ao programa do nível básico, adicionando a lógica para movimentar o Cavalo no tabuleiro de xadrez. 
@@ -100,4 +113,33 @@ Legibilidade: O código deve ser claro, organizado, fácil de entender, com nome
 Não é necessário validar a entrada do usuário.
 Não é necessário implementar outras regras do xadrez além do movimento específico do Cavalo solicitado.
 Você pode assumir que o Cavalo sempre começa na posição inicial (definida por você).
+
+Desafio: Nível mestre
+
+1 - Criando Movimentos Complexos
+Neste desafio final, você aprimorará o programa de xadrez que vem desenvolvendo, explorando técnicas avançadas de programação para simular os movimentos das peças.
+Prepare-se para usar recursividade e loops complexos!
+O que você vai fazer?
+Você deverá modificar o programa em C, que já contém a movimentação da Torre, Bispo, Rainha e Cavalo, realizando as seguintes alterações:
+Recursividade: Substitua os loops simples que controlam os movimentos da Torre, Bispo e Rainha por funções recursivas. 
+Cada função recursiva deverá simular o movimento da respectiva peça, imprimindo a direção correta a cada casa.
+Loops Complexos para o Cavalo: Aprimore a movimentação do Cavalo, utilizando loops aninhados com múltiplas variáveis e/ou condições. 
+Você pode usar continue e break para controlar o fluxo do loop de forma mais precisa. 
+O movimento do Cavalo agora será para cima e para a direita, em "L" (duas casas para cima e uma para a direita).
+ Bispo com Loops Aninhados: O Bispo deve ser implementado com recursividade, e também com loops aninhados, utilizando o loop mais externo para o movimento vertical, e o mais interno para o movimento horizontal.
+
+02 - Requisitos funcionais
+Entrada de Dados: Os valores para o número de casas a serem movidas (para recursão) e as condições dos loops (para o Cavalo) devem ser definidos diretamente no código, como variáveis ou constantes.
+Recursividade (Torre, Bispo e Rainha): Implemente funções recursivas para simular o movimento de cada peça, substituindo os loops originais.
+Loops Complexos (Cavalo): Utilize loops aninhados com múltiplas variáveis e/ou condições para simular o movimento do Cavalo em "L" (duas casas para cima e uma para a direita).
+Loops Aninhados (Bispo): Utilize loops aninhados para o bispo, sendo o loop mais externo o vertical, e o mais interno o horizontal.
+Saída de Dados: O programa deverá imprimir no console, de forma clara e organizada, a direção do movimento a cada casa percorrida por cada peça. Utilize o comando printf para exibir as informações. As saídas devem seguir o padrão: printf("Cima\n");, printf("Baixo\n");, printf("Esquerda\n");, printf("Direita\n");. Utilize linhas em branco para separar a saída de cada peça.
+
+03 - Requisitos não funcionais
+Performance: O código deve ser eficiente e executar sem atrasos perceptíveis. Evite chamadas recursivas excessivas que possam levar a um estouro de pilha (stack overflow).
+Documentação: O código deve ser bem documentado, com comentários detalhados explicando a lógica da recursividade, o funcionamento dos loops complexos e o propósito de cada variável e condição.
+Legibilidade: O código deve ser claro, organizado e fácil de entender, com nomes de variáveis descritivos e indentação adequada. Utilize apenas variáveis do tipo inteiro e string.
+Simplificações para o nível avançado
+Não é necessário validar a entrada do usuário.
+Não é necessário implementar outras regras do xadrez além dos movimentos específicos solicitados.
 */
